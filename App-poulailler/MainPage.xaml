@@ -17,6 +17,11 @@
             Text="Fermer"
             Clicked="OnFermerClicked"
             HorizontalOptions="Fill" />
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+            <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" />
+            <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" />
+        </Grid>
     </VerticalStackLayout>
 
 </ContentPage>
