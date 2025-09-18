@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="App_poulailler.MainPage">
+             x:Class="App_poulailler.MainPage"
+             BackgroundColor="{StaticResource Gray200}">
 
     <VerticalStackLayout
         Padding="30,0"
@@ -10,7 +11,11 @@
 
         <HorizontalStackLayout HorizontalOptions="Center">
             <Label Text="Fermer" VerticalOptions="Center"/>
-            <Switch x:Name="Interrupteur" Toggled="OnInterrupteurToggled"/>
+            <Switch x:Name="Interrupteur"
+                    Toggled="OnInterrupteurToggled"
+                    ThumbColor="Red"
+                    OnColor="Green"
+                    />
             <Label Text="Ouvrir" VerticalOptions="Center"/>
         </HorizontalStackLayout>
 
