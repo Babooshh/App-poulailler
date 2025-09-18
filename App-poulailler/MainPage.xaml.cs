@@ -9,16 +9,14 @@
             InitializeComponent();
         }
 
-        private void OnCounterClicked(object? sender, EventArgs e)
+        private void OnOuvrirClicked(object? sender, EventArgs e)
         {
-            count++;
+            DisplayAlert("Action", "Ouvrir", "OK");
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private void OnFermerClicked(object? sender, EventArgs e)
+        {
+            DisplayAlert("Action", "Fermer", "OK");
         }
     }
 }
