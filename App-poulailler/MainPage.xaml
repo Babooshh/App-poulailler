@@ -7,16 +7,12 @@
         Padding="30,0"
         Spacing="25"
         VerticalOptions="Center">
-        <Button
-            x:Name="OuvrirBtn"
-            Text="Ouvrir"
-            Clicked="OnOuvrirClicked"
-            HorizontalOptions="Fill" />
-        <Button
-            x:Name="FermerBtn"
-            Text="Fermer"
-            Clicked="OnFermerClicked"
-            HorizontalOptions="Fill" />
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label Text="Fermer" VerticalOptions="Center"/>
+            <Switch x:Name="Interrupteur" Toggled="OnInterrupteurToggled"/>
+            <Label Text="Ouvrir" VerticalOptions="Center"/>
+        </HorizontalStackLayout>
 
         <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
             <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" />

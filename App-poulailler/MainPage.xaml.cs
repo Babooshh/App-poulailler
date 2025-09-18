@@ -9,14 +9,16 @@
             InitializeComponent();
         }
 
-        private void OnOuvrirClicked(object? sender, EventArgs e)
+        private void OnInterrupteurToggled(object? sender, ToggledEventArgs e)
         {
-            DisplayAlert("Action", "Ouvrir", "OK");
-        }
-
-        private void OnFermerClicked(object? sender, EventArgs e)
-        {
-            DisplayAlert("Action", "Fermer", "OK");
+            if (e.Value)
+            {
+                DisplayAlert("Action", "Ouvrir", "OK");
+            }
+            else
+            {
+                DisplayAlert("Action", "Fermer", "OK");
+            }
         }
     }
 }
