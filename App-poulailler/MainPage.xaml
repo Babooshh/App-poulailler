@@ -5,24 +5,31 @@
              BackgroundColor="{StaticResource Gray200}">
 
     <VerticalStackLayout
-        Padding="30,0"
-        Spacing="25"
+        Padding="30,40"
+        Spacing="30"
         VerticalOptions="Center">
 
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Label Text="Fermer" VerticalOptions="Center"/>
-            <Switch x:Name="Interrupteur"
-                    Toggled="OnInterrupteurToggled"
-                    ThumbColor="Red"
-                    OnColor="Green"
-                    />
-            <Label Text="Ouvrir" VerticalOptions="Center"/>
-        </HorizontalStackLayout>
+        <Border Stroke="{StaticResource Gray300}" StrokeThickness="1" Background="White" StrokeShape="RoundRectangle 20" Margin="0,0,0,20" Padding="24" Shadow="5,5,10,Black,0.2">
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Contrôle de la porte" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center"/>
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
+                    <Label Text="Fermer" VerticalOptions="Center" FontSize="18"/>
+                    <Switch x:Name="Interrupteur"
+                            Toggled="OnInterrupteurToggled"
+                            ThumbColor="Red"
+                            OnColor="Green"
+                            Scale="1.3"/>
+                    <Label Text="Ouvrir" VerticalOptions="Center" FontSize="18"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Border>
 
-        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
-            <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" />
-            <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" />
-        </Grid>
+        <Border Stroke="{StaticResource Gray300}" StrokeThickness="1" Background="White" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,Black,0.2">
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+                <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
+                <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
+            </Grid>
+        </Border>
     </VerticalStackLayout>
 
 </ContentPage>
