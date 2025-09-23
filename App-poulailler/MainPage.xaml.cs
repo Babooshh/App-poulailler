@@ -27,5 +27,20 @@
                 }
             }
         }
+
+        private void OnSaveScheduleClicked(object? sender, EventArgs e)
+        {
+            var ouverture = TimePickerOuverture?.Time;
+            var fermeture = TimePickerFermeture?.Time;
+            if (ouverture != null && fermeture != null)
+            {
+                string message = $"Ouverture : {ouverture:hh\u003Amm}\nFermeture : {fermeture:hh\u003Amm}";
+                DisplayAlert("Programmation enregistrée", message, "OK");
+            }
+            else
+            {
+                DisplayAlert("Erreur", "Veuillez sélectionner les deux horaires.", "OK");
+            }
+        }
     }
 }
