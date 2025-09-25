@@ -2,42 +2,42 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="App_poulailler.MainPage"
-             BackgroundColor="{StaticResource Gray200}">
+             BackgroundColor="{StaticResource Gray100}">
 
     <VerticalStackLayout
         Padding="30,40"
         Spacing="30"
         VerticalOptions="Center">
 
-        <Border Stroke="{StaticResource Gray300}" StrokeThickness="1" Background="White" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,Black,0.2" Margin="0,0,0,20">
+        <Border Stroke="{StaticResource Tertiary}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,{StaticResource Tertiary},0.10" Margin="0,0,0,20">
             <VerticalStackLayout Spacing="16">
-                <Label Text="Programmation automatique" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center"/>
+                <Label Text="Programmation automatique" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Tertiary}" HorizontalOptions="Center"/>
                 <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
-                    <Label Text="Heure d'ouverture :" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                    <Label Text="Heure d'ouverture :" Grid.Row="0" Grid.Column="0" VerticalOptions="Center" TextColor="{StaticResource PrimaryDarkText}"/>
                     <TimePicker x:Name="TimePickerOuverture" x:FieldModifier="public" Grid.Row="0" Grid.Column="1"/>
-                    <Label Text="Heure de fermeture :" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                    <Label Text="Heure de fermeture :" Grid.Row="1" Grid.Column="0" VerticalOptions="Center" TextColor="{StaticResource PrimaryDarkText}"/>
                     <TimePicker x:Name="TimePickerFermeture" x:FieldModifier="public" Grid.Row="1" Grid.Column="1"/>
                 </Grid>
-                <Button Text="Enregistrer la programmation" Clicked="OnSaveScheduleClicked" Margin="0,10,0,0"/>
+                <Button Text="Enregistrer la programmation" Clicked="OnSaveScheduleClicked" Margin="0,10,0,0" BackgroundColor="{StaticResource Primary}" TextColor="{StaticResource White}"/>
             </VerticalStackLayout>
         </Border>
 
-        <Border Stroke="{StaticResource Gray300}" StrokeThickness="1" Background="White" StrokeShape="RoundRectangle 20" Margin="0,0,0,20" Padding="24" Shadow="5,5,10,Black,0.2">
+        <Border Stroke="{StaticResource PrimaryDark}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Margin="0,0,0,20" Padding="24" Shadow="5,5,10,{StaticResource PrimaryDark},0.15">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Contrôle de la porte" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource Primary}" HorizontalOptions="Center"/>
+                <Label Text="Contrôle de la porte" FontSize="28" FontAttributes="Bold" TextColor="{StaticResource PrimaryDark}" HorizontalOptions="Center"/>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
-                    <Label Text="Fermer" VerticalOptions="Center" FontSize="18"/>
+                    <Label Text="Fermer" VerticalOptions="Center" FontSize="18" TextColor="{StaticResource SecondaryDarkText}"/>
                     <Switch x:Name="Interrupteur"
                             Toggled="OnInterrupteurToggled"
-                            ThumbColor="Red"
-                            OnColor="Green"
+                            ThumbColor="{StaticResource PrimaryDark}"
+                            OnColor="{StaticResource Primary}"
                             Scale="1.3"/>
-                    <Label Text="Ouvrir" VerticalOptions="Center" FontSize="18"/>
+                    <Label Text="Ouvrir" VerticalOptions="Center" FontSize="18" TextColor="{StaticResource Primary}"/>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
 
-        <Border Stroke="{StaticResource Gray300}" StrokeThickness="1" Background="White" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,Black,0.2">
+        <Border Stroke="{StaticResource SecondaryDarkText}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,{StaticResource SecondaryDarkText},0.10">
             <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
                 <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
                 <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
