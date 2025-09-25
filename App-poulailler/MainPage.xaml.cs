@@ -34,7 +34,7 @@
             var fermeture = TimePickerFermeture?.Time;
             if (ouverture != null && fermeture != null)
             {
-                string message = $"Ouverture : {ouverture.Value.ToString("hh:mm")}\nFermeture : {fermeture.Value.ToString("hh:mm")}";
+                string message = $"Ouverture : {ouverture.Value.ToString(@"hh\:mm")}\nFermeture : {fermeture.Value.ToString(@"hh\:mm")}";
                 DisplayAlert("Programmation enregistrée", message, "OK");
             }
             else
