@@ -4,10 +4,11 @@
              x:Class="App_poulailler.MainPage"
              BackgroundColor="{StaticResource Gray100}">
 
-    <VerticalStackLayout
-        Padding="30,40"
-        Spacing="30"
-        VerticalOptions="Center">
+    <ScrollView Orientation="Both">
+        <VerticalStackLayout
+            Padding="30,40"
+            Spacing="30"
+            VerticalOptions="Center">
 
         <Border Stroke="{StaticResource Tertiary}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,{StaticResource Tertiary},0.10" Margin="0,0,0,20">
             <VerticalStackLayout Spacing="16">
@@ -43,6 +44,7 @@
                 <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
             </Grid>
         </Border>
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
 
 </ContentPage>
