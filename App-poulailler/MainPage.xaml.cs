@@ -1,15 +1,34 @@
-﻿namespace App_poulailler
+﻿using App_poulailler.Services;
+
+namespace App_poulailler
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
+        private readonly IMqttService _mqtt;
+        private bool _mqttInitialized;
 
-        public MainPage()
+        public MainPage(IMqttService mqttService)
         {
             InitializeComponent();
+            _mqtt = mqttService;
+            _ = EnsureMqttAsync();
         }
 
-        private void OnInterrupteurToggled(object? sender, ToggledEventArgs e)
+        private async Task EnsureMqttAsync()
+        {
+            if (_mqttInitialized) return;
+            try
+            {
+                await _mqtt.ConnectAsync();
+                _mqttInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("MQTT", $"Connexion impossible: {ex.Message}", "OK");
+            }
+        }
+
+        private async void OnInterrupteurToggled(object? sender, ToggledEventArgs e)
         {
             if (sender is Switch interrupteur)
             {
@@ -17,29 +36,43 @@
                 {
                     interrupteur.ThumbColor = Colors.Green;
                     interrupteur.OnColor = Colors.Green;
-                    DisplayAlert("Action", "Ouvrir", "OK");
+                    await PublishMqttSafe("poulailler/porte/cmd", "open");
                 }
                 else
                 {
                     interrupteur.ThumbColor = Colors.Red;
                     interrupteur.OnColor = Colors.Red;
-                    DisplayAlert("Action", "Fermer", "OK");
+                    await PublishMqttSafe("poulailler/porte/cmd", "close");
                 }
             }
         }
 
-        private void OnSaveScheduleClicked(object? sender, EventArgs e)
+        private async void OnSaveScheduleClicked(object? sender, EventArgs e)
         {
             var ouverture = TimePickerOuverture?.Time;
             var fermeture = TimePickerFermeture?.Time;
             if (ouverture != null && fermeture != null)
             {
-                string message = $"Ouverture : {ouverture.Value.ToString(@"hh\:mm")}\nFermeture : {fermeture.Value.ToString(@"hh\:mm")}";
-                DisplayAlert("Programmation enregistrée", message, "OK");
+                string message = $"Ouverture : {ouverture.Value:hh\\:mm}\nFermeture : {fermeture.Value:hh\\:mm}";
+                await PublishMqttSafe("poulailler/porte/schedule", $"{{\"open\":\"{ouverture.Value:hh\\:mm}\",\"close\":\"{fermeture.Value:hh\\:mm}\"}}");
+                await DisplayAlert("Programmation enregistrée", message, "OK");
             }
             else
             {
                 DisplayAlert("Erreur", "Veuillez sélectionner les deux horaires.", "OK");
+            }
+        }
+
+        private async Task PublishMqttSafe(string topic, string payload)
+        {
+            try
+            {
+                await EnsureMqttAsync();
+                await _mqtt.PublishAsync(topic, payload);
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("MQTT", $"Erreur publication: {ex.Message}", "OK");
             }
         }
     }

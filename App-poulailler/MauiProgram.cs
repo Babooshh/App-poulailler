@@ -15,6 +15,11 @@ namespace App_poulailler
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // TODO: externaliser dans config / secure storage
+            const string mqttHost = "test.mosquitto.org"; // broker public pour tests
+            const int mqttPort = 1883;
+            builder.Services.AddSingleton<Services.IMqttService>(_ => new Services.MqttService(mqttHost, mqttPort));
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
