@@ -16,7 +16,7 @@ namespace App_poulailler
                 });
 
             // TODO: externaliser dans config / secure storage
-            const string mqttHost = "test.mosquitto.org"; // broker public pour tests
+            const string mqttHost = "172.31.254.129"; // broker raspi pour tests
             const int mqttPort = 1883;
             builder.Services.AddSingleton<Services.IMqttService>(_ => new Services.MqttService(mqttHost, mqttPort));
 
