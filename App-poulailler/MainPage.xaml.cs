@@ -10,6 +10,7 @@ namespace App_poulailler
         private bool _mqttInitialized;
         private readonly Dictionary<string, Label> _chickenLabels = new();
         private readonly Dictionary<string, string> _chickenLocation = new(); // id -> "interieur" | "exterieur"
+        private bool _suppressToggleHandler = false;
 
         public MainPage(IMqttService mqttService)
         {
@@ -107,6 +108,7 @@ namespace App_poulailler
 
         private async void OnInterrupteurToggled(object? sender, ToggledEventArgs e)
         {
+            if (_suppressToggleHandler) return;
             if (sender is Switch interrupteur)
             {
                 if (e.Value)
@@ -117,11 +119,32 @@ namespace App_poulailler
                 }
                 else
                 {
+                    // Empêcher la fermeture si toutes les poules ne sont pas à l'intérieur
+                    if (!AllChickensInside())
+                    {
+                        _suppressToggleHandler = true;
+                        interrupteur.IsToggled = true; // revert
+                        _suppressToggleHandler = false;
+                        await DisplayAlert("Sécurité", "Impossible de fermer: toutes les poules ne sont pas à l'intérieur.", "OK");
+                        return;
+                    }
                     interrupteur.ThumbColor = Colors.Red;
                     interrupteur.OnColor = Colors.Red;
                     await PublishMqttSafe("poulailler/porte/cmd", "close");
                 }
             }
+        }
+
+        private bool AllChickensInside()
+        {
+            // Si aucune info, on considère que la fermeture n'est pas autorisée
+            if (_chickenLocation.Count == 0) return false;
+            foreach (var kv in _chickenLocation)
+            {
+                if (!string.Equals(kv.Value, "interieur", StringComparison.Ordinal))
+                    return false;
+            }
+            return true;
         }
 
         private async void OnSaveScheduleClicked(object? sender, EventArgs e)
