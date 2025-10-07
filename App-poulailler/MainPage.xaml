@@ -39,9 +39,12 @@
         </Border>
 
         <Border Stroke="{StaticResource SecondaryDarkText}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,{StaticResource SecondaryDarkText},0.10">
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
-                <Label Text="Catégorie Intérieur" Grid.Column="0" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
-                <Label Text="Catégorie Extérieur" Grid.Column="1" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,*" ColumnSpacing="16" RowSpacing="12">
+                <Label Text="Intérieur" Grid.Column="0" Grid.Row="0" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
+                <Label Text="Extérieur" Grid.Column="1" Grid.Row="0" FontAttributes="Bold" HorizontalOptions="Center" FontSize="20" TextColor="{StaticResource PrimaryDarkText}"/>
+
+                <VerticalStackLayout x:Name="InterieurList" Grid.Column="0" Grid.Row="1" Spacing="8"/>
+                <VerticalStackLayout x:Name="ExterieurList" Grid.Column="1" Grid.Row="1" Spacing="8"/>
             </Grid>
         </Border>
         </VerticalStackLayout>

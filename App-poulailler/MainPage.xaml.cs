@@ -1,4 +1,6 @@
 ﻿using App_poulailler.Services;
+using Microsoft.Maui.ApplicationModel;
+using System.Text.Json;
 
 namespace App_poulailler
 {
@@ -6,6 +8,8 @@ namespace App_poulailler
     {
         private readonly IMqttService _mqtt;
         private bool _mqttInitialized;
+        private readonly Dictionary<string, Label> _chickenLabels = new();
+        private readonly Dictionary<string, string> _chickenLocation = new(); // id -> "interieur" | "exterieur"
 
         public MainPage(IMqttService mqttService)
         {
@@ -21,11 +25,84 @@ namespace App_poulailler
             {
                 await _mqtt.ConnectAsync();
                 _mqttInitialized = true;
+                _mqtt.MessageReceived += OnMqttMessageReceived;
+                await _mqtt.SubscribeAsync("poulailler/poules");
             }
             catch (Exception ex)
             {
                 await DisplayAlert("MQTT", $"Connexion impossible: {ex.Message}", "OK");
             }
+        }
+
+        private void OnMqttMessageReceived(object? sender, string payload)
+        {
+            // Expected payload example:
+            // {"id":"029EC135","nom":"Poule2","etat":"dedans","horodatage":"2025-10-07 11:06:58"}
+            try
+            {
+                var update = JsonSerializer.Deserialize<PouleUpdate>(payload);
+                if (update == null || string.IsNullOrWhiteSpace(update.id)) return;
+
+                var location = NormalizeEtat(update.etat);
+                if (location == null) return; // unknown state
+
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    if (!_chickenLabels.TryGetValue(update.id, out var label))
+                    {
+                        label = new Label { Text = FormatChickenText(update), FontSize = 16 };
+                        _chickenLabels[update.id] = label;
+                    }
+                    else
+                    {
+                        label.Text = FormatChickenText(update);
+                        // Remove from previous container if any
+                        if (_chickenLocation.TryGetValue(update.id, out var prev))
+                        {
+                            if (prev == "interieur") InterieurList.Children.Remove(label);
+                            else if (prev == "exterieur") ExterieurList.Children.Remove(label);
+                        }
+                    }
+
+                    // Add to new container
+                    if (location == "interieur")
+                        InterieurList.Children.Add(label);
+                    else
+                        ExterieurList.Children.Add(label);
+
+                    _chickenLocation[update.id] = location;
+                });
+            }
+            catch
+            {
+                // ignore malformed payloads
+            }
+        }
+
+        private static string? NormalizeEtat(string? etat)
+        {
+            if (string.IsNullOrWhiteSpace(etat)) return null;
+            etat = etat.Trim().ToLowerInvariant();
+            return etat switch
+            {
+                "dedans" or "interieur" or "int" => "interieur",
+                "dehors" or "exterieur" or "ext" => "exterieur",
+                _ => null
+            };
+        }
+
+        private static string FormatChickenText(PouleUpdate update)
+        {
+            var name = string.IsNullOrWhiteSpace(update.nom) ? update.id : update.nom;
+            return $"{name} ({update.id})";
+        }
+
+        private class PouleUpdate
+        {
+            public string? id { get; set; }
+            public string? nom { get; set; }
+            public string? etat { get; set; }
+            public string? horodatage { get; set; }
         }
 
         private async void OnInterrupteurToggled(object? sender, ToggledEventArgs e)
