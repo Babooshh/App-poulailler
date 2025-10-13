@@ -1,6 +1,7 @@
 ﻿using App_poulailler.Services;
 using Microsoft.Maui.ApplicationModel;
 using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace App_poulailler
 {
@@ -11,6 +12,8 @@ namespace App_poulailler
         private readonly Dictionary<string, Label> _chickenLabels = new();
         private readonly Dictionary<string, string> _chickenLocation = new(); // id -> "interieur" | "exterieur"
         private bool _suppressToggleHandler = false;
+
+        public MainPage() : this(App.Current.Services.GetRequiredService<IMqttService>()) { }
 
         public MainPage(IMqttService mqttService)
         {
