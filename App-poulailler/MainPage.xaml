@@ -10,6 +10,15 @@
             Spacing="30"
             VerticalOptions="Center">
 
+        <!-- Logo en haut de page -->
+        <Border Stroke="{StaticResource PrimaryDark}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="16" Shadow="5,5,10,{StaticResource PrimaryDark},0.10">
+            <Image Source="logo_poulailler.png"
+                   HeightRequest="120"
+                   Aspect="AspectFit"
+                   SemanticProperties.Description="Logo poulailler connecté"
+                   HorizontalOptions="Center" />
+        </Border>
+
         <Border Stroke="{StaticResource Tertiary}" StrokeThickness="2" Background="{StaticResource White}" StrokeShape="RoundRectangle 20" Padding="18" Shadow="5,5,10,{StaticResource Tertiary},0.10" Margin="0,0,0,20">
             <VerticalStackLayout Spacing="16">
                 <Label Text="Programmation automatique" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Tertiary}" HorizontalOptions="Center"/>
