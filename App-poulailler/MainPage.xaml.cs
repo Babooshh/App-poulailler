@@ -95,7 +95,7 @@ namespace App_poulailler
         private static string FormatChickenText(PouleUpdate update)
         {
             var name = string.IsNullOrWhiteSpace(update.nom) ? update.id : update.nom;
-            return $"{name} ({update.id})";
+            return $"{name}";
         }
 
         private class PouleUpdate
