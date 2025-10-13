@@ -4,7 +4,7 @@
              x:Class="App_poulailler.MainPage"
              BackgroundColor="{StaticResource Gray100}">
 
-    <ScrollView Orientation="Both">
+
         <VerticalStackLayout
             Padding="30,40"
             Spacing="30"
@@ -48,6 +48,6 @@
             </Grid>
         </Border>
         </VerticalStackLayout>
-    </ScrollView>
+
 
 </ContentPage>
