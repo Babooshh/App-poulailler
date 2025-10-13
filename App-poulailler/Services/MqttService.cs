@@ -1,6 +1,5 @@
 using MQTTnet;
 using MQTTnet.Client;
-using MQTTnet.Client.Options;
 using System.Text;
 
 namespace App_poulailler.Services;
@@ -95,9 +94,9 @@ public class MqttService : IMqttService
             .WithPayload(payload)
             .WithRetainFlag(retain);
 
-        if (qos == 2) message = message.WithExactlyOnceQoS();
-        else if (qos == 1) message = message.WithAtLeastOnceQoS();
-        else message = message.WithAtMostOnceQoS();
+        if (qos == 2) message = message.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce);
+        else if (qos == 1) message = message.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtLeastOnce);
+        else message = message.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.AtMostOnce);
 
         await _client!.PublishAsync(message.Build(), cancellationToken);
     }
