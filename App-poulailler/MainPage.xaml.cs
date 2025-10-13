@@ -13,7 +13,9 @@ namespace App_poulailler
         private readonly Dictionary<string, string> _chickenLocation = new(); // id -> "interieur" | "exterieur"
         private bool _suppressToggleHandler = false;
 
-        public MainPage() : this(App.Current.Services.GetRequiredService<IMqttService>()) { }
+        public MainPage() : this(
+            (IMqttService)(App.Current as IServiceProvider)?.GetService(typeof(IMqttService))!
+        ) { }
 
         public MainPage(IMqttService mqttService)
         {
